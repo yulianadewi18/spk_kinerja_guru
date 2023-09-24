@@ -24,12 +24,12 @@ class UsersSeeder extends Seeder
             [
                 'name' => 'Penguji 1',
                 'username' => 'penguji1',
-                'password' => bcrypt('penguji1'),
+                'password' => bcrypt('penguji01'),
                 'roles' => 'penguji',
             ],
         ];
 
-        foreach ($users as $key => $value){
+        foreach ($users as $key => $value) {
             User::create($value);
         }
     }

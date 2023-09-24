@@ -34,6 +34,7 @@ Route::middleware(['auth'])->group(function () {
     Route::middleware('admin')->group(function () {
         Route::prefix('data-guru')->group(function () {
             Route::get('/', [MstGuruController::class, 'index'])->name('data_guru');
+            Route::get('/guru', [MstGuruController::class, 'index'])->name('guru.index');
             Route::get('/tambah', [MstGuruController::class, 'create'])->name('create_guru');
         });
         Route::prefix('data-kriteria')->group(function () {
