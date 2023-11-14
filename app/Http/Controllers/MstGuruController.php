@@ -18,4 +18,12 @@ class MstGuruController extends Controller
         return view('pages.mst_guru.form');
     }
 }
+
+public function delete($id)
+    {
+        Data::where('nama', $id)->delete();
+        Guru::find($id)->delete();
+
+        return redirect()->route('guru.index')->with('success', 'Data guru berhasil dihapus.');
+    }
 }

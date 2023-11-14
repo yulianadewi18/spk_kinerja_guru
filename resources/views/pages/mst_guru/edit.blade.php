@@ -1,6 +1,6 @@
 @extends('layout.master')
 
-@section('title', 'Tambah Guru')
+@section('title', 'Edit')
 
 @push('css')
     <style>

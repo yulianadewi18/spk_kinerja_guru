@@ -35,12 +35,14 @@
                             <td>{{ $guru->email }}</td>
                             <td>{{ $guru->kabupaten }}</td>
                             <td>{{ $guru->nohp1 }}</td>
-                            <td>
-                                <form class="text-center" method="post">
-                                    <button type="submit" class="btn btn-warning">Edit</button>
-                                    <button type="submit" class="btn btn-danger">Hapus</button>
-                                </form>
-                            </td>
+                            <td class="text-center">
+                            <a href="{{ route('edit_guru', ['id' => $guru->nama]) }}" class="btn btn-warning btn-sm">Edit</a>
+                            <form action="{{ route('delete_guru', ['nama' => $guru->nama]) }}" method="POST" style="display: inline;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Apakah Anda yakin ingin menghapus data guru?')">Delete</button>
+                            </form>
+                        </td>
                         </tr>
                     @endforeach
                 </tbody>
