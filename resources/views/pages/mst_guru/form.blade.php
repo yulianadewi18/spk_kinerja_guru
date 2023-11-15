@@ -215,16 +215,16 @@
                 </div>
             </div>
             <tbody>
-                                <?php foreach ($dataView as $item) : ?>
+                                <?php foreach ($dataView as $guru) : ?>
                                     <tr>
-                                        <td><?php echo $item['nama'] . '(' . $item['detail'] . ')'; ?></td>
+                                        <td><?php echo $guru['nama'] . '(' . $guru['detail'] . ')'; ?></td>
 
                                         <?php
                                         $no = 1;
-                                        foreach ($item['data'] as $dataItem) :
+                                        foreach ($guru['data'] as $dataGuru) :
                                             $isChecked = false;
-                                            if (isset($nilai)) {
-                                                foreach ($nilai as $value) {
+                                            if (isset($data)) {
+                                                foreach ($data as $value) {
                                         ?>
                                                     <script>
                                                         console.log(<?php echo json_encode($value); ?>);
@@ -240,7 +240,7 @@
                                             }
                                             ?>
                                             <td>
-                                                <input type="radio" name="nilai[<?php echo $dataItem->kdKriteria ?>]" value="<?php echo $dataItem->value ?>" <?php echo $isChecked ? 'checked="checked"' : '' ?> /> <?php echo $dataItem->subKriteria; ?>
+                                                <input type="radio" name="data[<?php echo $dataItem->kdKriteria ?>]" value="<?php echo $dataItem->value ?>" <?php echo $isChecked ? 'checked="checked"' : '' ?> /> <?php echo $dataItem->subKriteria; ?>
                                             </td>
                                         <?php
                                             $no++;
