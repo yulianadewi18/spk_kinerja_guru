@@ -44,6 +44,9 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/', [DataKriteriaController::class, 'index'])->name('data_kriteria');
             Route::get('/tambah', [DataKriteriaController::class, 'create'])->name('create_kriteria');
             Route::post('/store', [DataKriteriaController::class, 'store'])->name('store_kriteria');
+            Route::get('/edit{id}', [DataKriteriaController::class, 'edit'])->name('edit_kriteria');
+            Route::post('/update{id}', [DataKriteriaController::class, 'update'])->name('update_kriteria');
+            Route::delete('/hapus/{id}', [DataKriteriaController::class, 'destroy'])->name('destroy_kriteria');
         });
         Route::prefix('data-pengguna')->group(function () {
             Route::get('/', [UsersController::class, 'index'])->name('data_pengguna');

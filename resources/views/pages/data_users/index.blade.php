@@ -8,11 +8,11 @@
     
 @section('content')
 @if (session('success'))
-<div class="alert alert-success">
-    {{ session('success') }}
-</div>
-    
+    <div class="alert alert-success">
+        {{ session('success') }}
+    </div>
 @endif
+
     <div class="card border-top-primary shadow mb-4">
         <div class="card-body pt-3">
             <div class="mb-2">
