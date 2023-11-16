@@ -29,7 +29,7 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="">Kode Kriteria</label>
-                            <input type="text" class="form-control" name="kode_kriteria" @if(!empty($kriteria)) value="{{ $kriteria->kode_kriteria }}" disabled @endif>
+                            <input type="text" class="form-control" name="kode_kriteria" @if(!empty($kriteria)) value="{{ $kriteria->kode_kriteria }}"  @endif>
                         </div>
                     </div>
                     <div class="col-lg-12">
@@ -47,7 +47,7 @@
                 </div>
             </div>
             <div class="card-footer justify-content-between" style="display: flex">
-                <a href="{{ URL::previous() }}" class="btn btn-sm btn-warning">Kembali</a>
+                <a href="{{ route('data_kriteria') }}" class="btn btn-sm btn-warning">Kembali</a>
                 @if (!empty($kriteria))
                 <button class="btn btn-sm btn-primary">Update</button>
                 @else
