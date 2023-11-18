@@ -17,6 +17,7 @@ class CreateMstKriteriaTable extends Migration
             $table->id();
             $table->string('kode_kriteria');
             $table->string('nama_kriteria');
+            $table->string('sifat');
             $table->integer('bobot_kriteria');
             $table->timestamps();
         });

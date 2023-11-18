@@ -8,6 +8,7 @@ use App\Http\Controllers\{
     MstGuruController,
     DataAlternatifController,
     DataKriteriaController,
+    DataSubKriteriaController,
     PenilaianAlternatifController,
     PerhitunganController,
     UsersController
@@ -48,6 +49,25 @@ Route::middleware(['auth'])->group(function () {
             Route::post('/update{id}', [DataKriteriaController::class, 'update'])->name('update_kriteria');
             Route::delete('/hapus/{id}', [DataKriteriaController::class, 'destroy'])->name('destroy_kriteria');
         });
+
+        Route::prefix('data-sub-kriteria')->group(function () {
+            Route::get('/', [DataSubKriteriaController::class, 'index'])->name('data_sub_kriteria');
+            Route::get('/tambah', [DataSubKriteriaController::class, 'create'])->name('create_sub_kriteria');
+            Route::post('/store', [DataSubKriteriaController::class, 'store'])->name('store_sub_kriteria');
+            Route::get('/edit{id}', [DataSubKriteriaController::class, 'edit'])->name('edit_sub_kriteria');
+            Route::post('/update{id}', [DataSubKriteriaController::class, 'update'])->name('update_sub_kriteria');
+            Route::delete('/hapus/{id}', [DataSubKriteriaController::class, 'destroy'])->name('destroy_sub_kriteria');
+        });
+
+        Route::prefix('data-alternatif')->group(function () {
+            Route::get('/', [DataAlternatifController::class, 'index'])->name('data_alternatif');
+            Route::get('/tambah', [DataAlternatifController::class, 'create'])->name('create_alternatif');
+            Route::post('/store', [DataAlternatifController::class, 'store'])->name('store_alternatif');
+            Route::get('/edit{id}', [DataAlternatifController::class, 'edit'])->name('edit_alternatif');
+            Route::post('/update{id}', [DataAlternatifController::class, 'update'])->name('update_alternatif');
+            Route::delete('/hapus/{id}', [DataAlternatifController::class, 'destroy'])->name('destroy_alternatif');
+        });
+
         Route::prefix('data-pengguna')->group(function () {
             Route::get('/', [UsersController::class, 'index'])->name('data_pengguna');
             Route::get('/tambah', [UsersController::class, 'create'])->name('create_pengguna');
@@ -59,10 +79,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/dashboard', function () {
         return view('pages.dashboard');
     })->name('dashboard');
-    Route::prefix('data-alternatif')->group(function () {
-        Route::get('/', [DataAlternatifController::class, 'index'])->name('data_alternatif');
-        Route::get('/tambah', [DataAlternatifController::class, 'create'])->name('create_alternatif');
-    });
+
     Route::prefix('penilaian-alternatif')->group(function () {
         Route::get('/', [PenilaianAlternatifController::class, 'index'])->name('penilaian_alternatif');
         Route::get('/tambah', [PenilaianAlternatifController::class, 'create'])->name('create_penilaian');
@@ -77,5 +94,4 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/hapus-hasil', function () {
         return view('pages.dashboard');
     })->name('hapus_hasil');
-    
 });

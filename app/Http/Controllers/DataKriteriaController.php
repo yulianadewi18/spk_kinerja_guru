@@ -58,7 +58,7 @@ class DataKriteriaController extends Controller
 
     function update(Request $request, $id) {
         $data = $request->validate([
-            'kode_kriteria'  => 'required|unique:mst_kriteria,kode_kriteria',
+            'kode_kriteria'  => 'required|unique:mst_kriteria,id',
             'nama_kriteria'  => 'required',
             'bobot_kriteria'  => 'required',
         ],[

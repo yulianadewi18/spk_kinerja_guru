@@ -16,7 +16,7 @@ class gurumodel extends Model
 
     public function updateBalita($id, $data)
     {
-        return $this->where('nama', $id)->update($data);
+        return $this->where('nipa', $id)->update($data);
     }
 
     public function deleteGuru($id)

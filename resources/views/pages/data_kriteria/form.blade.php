@@ -1,27 +1,27 @@
 @extends('layout.master')
 
 @if (!empty($kriteria))
-    @section('title', 'Edit Kriteria')
+@section('title', 'Edit Kriteria')
 @else
-    @section('title', 'Tambah Kriteria')
+@section('title', 'Tambah Kriteria')
 @endif
-    
+
 @section('content')
 @if ($errors->any())
-    <div class="alert alert-danger">
-        <ul>
-            @foreach ($errors->all(); as $item)
-                <li>{{ $item}}</li>
-            @endforeach
-        </ul>
-    </div>
+<div class="alert alert-danger">
+    <ul>
+        @foreach ($errors->all(); as $item)
+        <li>{{ $item}}</li>
+        @endforeach
+    </ul>
+</div>
 @endif
-    <div class="card border-top-primary shadow mb-4">
-        @if (!empty($kriteria))
-        <form action="{{ url('data-kriteria/update').$kriteria->id }}" method="POST">
+<div class="card border-top-primary shadow mb-4">
+    @if (!empty($kriteria))
+    <form action="{{ url('data-kriteria/update').$kriteria->id }}" method="POST">
         @else
         <form action="{{ url('data-kriteria/store') }}" method="POST">
-        @endif
+            @endif
             @csrf
             <input type="hidden" class="form-control" name="id" @if(!empty($kriteria)) value="{{ $kriteria->id }}" @endif>
             <div class="card-body pt-3">
@@ -29,8 +29,9 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="">Kode Kriteria</label>
-                            <input type="text" class="form-control" name="kode_kriteria" @if(!empty($kriteria)) value="{{ $kriteria->kode_kriteria }}"  @endif>
+                            <input type="text" class="form-control" name="kode_kriteria" @if(!empty($kriteria)) value="{{ $kriteria->kode_kriteria }}" @else value="{{ Session::get('nama_kriteria') }}" @endif>
                         </div>
+                        
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
@@ -55,5 +56,5 @@
                 @endif
             </div>
         </form>
-    </div>
+</div>
 @endsection

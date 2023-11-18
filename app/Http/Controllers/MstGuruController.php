@@ -23,12 +23,11 @@ class MstGuruController extends Controller
 public function edit($id)
     {
         $guru = Guru::findOrFail($id);
-        $nilai = gurumodel::where('nama', $id)->get();
+        $nilai = gurumodel::where('nipa', $id)->get();
         $dataView = $this->getDataInsert();
         // dd($nilai);
         return view('pages.mst_guru.edit', compact('guru', 'dataView', 'nilai'));
     }
-    
 
     public function delete($id)
     {
@@ -36,7 +35,6 @@ public function edit($id)
     
         if ($guru) {
             $guru->delete();
-            // Lanjutkan dengan penghapusan lain atau tindakan yang sesuai
             return redirect()->route('guru.index')->with('success', 'Data guru berhasil dihapus.');
         } else {
             // Handle kasus di mana data tidak ditemukan
@@ -45,4 +43,5 @@ public function edit($id)
     }
     
 }
+
  

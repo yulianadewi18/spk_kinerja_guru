@@ -29,12 +29,12 @@
                                                request()->segment(1) == 'data-kriteria' ||
                                                request()->segment(1) == 'data-sub-kriteria' ? 'show' : ''}}" aria-labelledby="heading2" data-parent="#accordionSidebar">
             <div class="bg-white py-2 collapse-inner rounded">
-                @if (Auth::user()->roles =="admin")
+                @if (Auth::user()->roles =="admin") 
                     <a class="collapse-item {{ request()->segment(1) == 'data-guru' ? 'active' : ''}}" href="{{ route('data_guru') }}">Guru</a>
                 @endif
                 <a class="collapse-item {{ request()->segment(1) == 'data-alternatif' ? 'active' : ''}}" href="{{ route('data_alternatif') }}">Alternatif</a>
                 <a class="collapse-item {{ request()->segment(1) == 'data-kriteria' ? 'active' : ''}}" href="{{ route('data_kriteria') }}">Kriteria</a>
-                <a class="collapse-item {{ request()->segment(1) == 'penilaian-alternatif' ? 'active' : ''}}" href="{{ route('penilaian_alternatif') }}">Sub Kriteria</a>
+                <a class="collapse-item {{ request()->segment(1) == 'data-sub-kriteria' ? 'active' : ''}}" href="{{ route('data_sub_kriteria') }}">Sub Kriteria</a>
             </div>
         </div>
     </li>
