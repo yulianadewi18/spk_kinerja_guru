@@ -2,15 +2,22 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Guru extends Model
 {
     use HasFactory;
-
-    protected $table = 'mst_kriteria';
+    protected $primaryKey = 'id';
+    protected $table = 'mst_guru';
     
     protected $fillable = [
-        'kode_kriteria', 'nama_kriteria', 'bobot_kriteria',
+        'nama_guru', 'gender', 'nipa','ttl',
+         'nuptk', 'nrg','jns_guru', 'tugas',
+          'tambahan','ijazah', 'tahun_lulus', 'pt',
+          'fakultas', 'jurusan', 'prodi','akta_mengajar',
+           'jalan', 'rt','rw', 'dusun', 
+           'kelurahan','kecamatan', 'kabupaten', 'kodepos',
+           'nohp', 'nohp2',
     ];
-}  
+}

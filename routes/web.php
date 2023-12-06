@@ -5,7 +5,7 @@ use App\Http\Controllers\Auth\{
     LoginController,
 };
 use App\Http\Controllers\{
-    MstGuruController,
+    DataGuruController,
     DataAlternatifController,
     DataKriteriaController,
     DataSubKriteriaController,
@@ -34,12 +34,12 @@ Route::middleware(['auth'])->group(function () {
     // Admin Role
     Route::middleware('admin')->group(function () {
         Route::prefix('data-guru')->group(function () {
-            Route::get('/', [MstGuruController::class, 'index'])->name('data_guru');
-            Route::get('/guru', [MstGuruController::class, 'index'])->name('guru.index');
-            Route::get('edit', [MstGuruController::class, 'edit'])->name('edit_guru');
-            Route::delete('guru/{nama}', [MstGuruController::class, 'delete'])->name('delete_guru');
-
-            Route::get('/tambah', [MstGuruController::class, 'create'])->name('create_guru');
+            Route::get('/', [DataGuruController::class, 'index'])->name('data_guru');
+            Route::get('/tambah', [DataGuruController::class, 'create'])->name('create_guru');
+            Route::post('/store', [DataGuruController::class, 'store'])->name('store_guru');
+            Route::get('/edit{id}', [DataGuruController::class, 'edit'])->name('edit_guru');
+            Route::post('/update{id}', [DataGuruController::class, 'update'])->name('update_guru');
+            Route::delete('/hapus/{id}', [DataGuruController::class, 'destroy'])->name('destroy_guru');
         });
         Route::prefix('data-kriteria')->group(function () {
             Route::get('/', [DataKriteriaController::class, 'index'])->name('data_kriteria');
