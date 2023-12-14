@@ -33,7 +33,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Data Pribadi</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="collapseCardExample" style="">
+                    <div class="collapse show" id="collapseCardExample" >
                         <div class="card-body">
                             <div class="form-group">
                                 <strong for="">Nama Guru</strong>
@@ -159,7 +159,7 @@
                         <h6 class="m-0 font-weight-bold text-primary">Informasi Akademik</h6>
                     </a>
                     <!-- Card Content - Collapse -->
-                    <div class="collapse show" id="dataPendidikan" style="">
+                    <div class="collapse show" id="dataPendidikan" >
                         <div class="card-body">
                             <div class="form-group">
                                 <label for="">NUPTK</label>

@@ -53,7 +53,7 @@
             "emptyTable": "Data Alternatif kosong."
         },
         columnDefs: [{
-            targets: 4,
+            targets: 0,
             className: 'text-center'
         }],
         columns:[
