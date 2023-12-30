@@ -44,7 +44,7 @@
                                 <div class="row">
                                     <div class="col-lg-6">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gender" id="lk" value="Laki-laki" @if(!empty($guru) && $guru->gender == 'Laki-laki') checked @elseif(empty($guru) && Session::get('gender') == 'Laki-laki') checked @endif>
+                                            <input class="form-check-input" type="radio" name="gender" id="lk" value="Laki-laki" @if(!empty($guru) && $guru->gender == 'Laki-laki') checked @else {{old('gender') == 'Laki-laki' ? 'checked' : ''}} @endif>
                                             <label class="form-check-label" for="lk">
                                                 Laki-laki
                                             </label>
@@ -52,7 +52,7 @@
                                     </div>
                                     <div class="col-lg-6">
                                         <div class="form-check">
-                                            <input class="form-check-input" type="radio" name="gender" id="pr" value="Perempuan" @if(!empty($guru) && $guru->gender == 'Perempuan') checked @elseif(empty($guru) && Session::get('gender') == 'Perempuan') checked @endif>
+                                            <input class="form-check-input" type="radio" name="gender" id="pr" value="Perempuan" @if(!empty($guru) && $guru->gender == 'Perempuan') checked @else {{old('gender') == 'Perempuan' ? 'checked' : ''}} @endif>
                                             <label class="form-check-label" for="pr">
                                                 Perempuan
                                             </label>
@@ -69,12 +69,12 @@
                                 <div class="row">
                                     <!-- Tempat Lahir -->
                                     <div class="col-lg-6">
-                                        <input type="text" class="form-control" name="ttl" placeholder="Tempat Lahir" @if(!empty($guru)) value="{{ $guru->ttl }}" @else value="{{ Session::get('ttl') }}" @endif>
+                                        <input type="text" class="form-control" name="tempat_lahir" placeholder="Tempat Lahir" @if(!empty($guru)) value="{{ $guru->tempat_lahir }}" @else value="{{ Session::get('tempat_lahir') }}" @endif>
                                     </div>
                 
                                     <!-- Tanggal Lahir -->
                                     <div class="col-lg-6">
-                                        <input type="date" class="form-control" name="ttl" @if(!empty($guru)) value="{{ $guru->ttl }}" @else value="{{ Session::get('ttl') }}" @endif>
+                                        <input type="date" class="form-control" name="tanggal_lahir" @if(!empty($guru)) value="{{ $guru->tanggal_lahir }}" @else value="{{ Session::get('tanggal_lahir') }}" @endif>
                                     </div>
                                 </div>
                             </div>
@@ -107,7 +107,7 @@
                                 <div class="col-lg-12">
                                     <div class="form-group">
                                         <strong for="">Detail Alamat</strong>
-                                        <textarea class="form-control" name="jalan" @if(!empty($guru)) value="{{ $guru->jalan }}" @else value="{{ Session::get('jalan') }}" @endif rows="5"></textarea>
+                                        <textarea class="form-control" name="jalan" rows="5">@if(!empty($guru)){{ $guru->jalan }} @else {{ Session::get('jalan') }} @endif </textarea>
                                     </div>
                                 </div>
                 

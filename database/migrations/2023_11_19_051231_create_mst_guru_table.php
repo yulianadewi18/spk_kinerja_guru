@@ -18,7 +18,8 @@ class CreateMstGuruTable extends Migration
             $table->string('nama_guru');
             $table->enum('gender', ['Laki-laki', 'Perempuan']);  
             $table->string('nipa');
-            $table->date('ttl'); 
+            $table->string('tempat_lahir');
+            $table->date('tanggal_lahir'); 
             $table->string('nuptk');
             $table->string('nrg');
             $table->string('jns_guru');

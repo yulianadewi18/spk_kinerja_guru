@@ -15,13 +15,19 @@ class DataGuruController extends Controller
         if ($request->ajax()) {
             $fetchAll = DataTables::of($data_guru)
                 ->addIndexColumn()
+                ->addColumn('ttl', function ($data) {
+                    return $data->tempat_lahir. ', ' . date('d-m-Y', strtotime($data->tanggal_lahir) );                    
+                })
                 ->addColumn('action', function ($data) {
                     return '
-                    <a href="' . route('edit_guru', $data->id) . '" class="btn btn-warning btn-sm" >Edit</a>
-                    <button class="btn btn-danger btn-sm" onclick="deleteData(`' . route('destroy_guru', $data->id) . '`)">Hapus </button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>
+                        <a href="' . route('edit_guru', $data->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
+                        <button type="button" class="btn btn-danger btn-sm" onclick="deleteData(`' . route('destroy_guru', $data->id) . '`)"><i class="fas fa-trash"></i></button>
+                    </div> 
                 ';
                 })
-                ->rawColumns(['action'])
+                ->rawColumns(['ttl', 'action'])
                 ->make(true);
             return $fetchAll;
         }
@@ -38,7 +44,8 @@ class DataGuruController extends Controller
         $request->session()->flash('nama_guru', $request->nama_guru);
         $request->session()->flash('gender', $request->gender);
         $request->session()->flash('nipa', $request->nipa);
-        $request->session()->flash('ttl', $request->ttl);
+        $request->session()->flash('tempat_lahir', $request->tempat_lahir);
+        $request->session()->flash('tanggal_lahir', $request->tanggal_lahir);
         $request->session()->flash('nuptk', $request->nuptk);
         $request->session()->flash('nrg', $request->nrg);
         $request->session()->flash('jns_guru', $request->jns_guru);
@@ -66,7 +73,8 @@ class DataGuruController extends Controller
             'nama_guru'  => 'required',
             'gender'  => 'required',
             'nipa'  => 'required |unique:mst_guru',
-            'ttl'  => 'required',
+            'tempat_lahir'  => 'required',
+            'tanggal_lahir'  => 'required',
             'nuptk'  => 'required',
             'nrg'  => 'required',
             'jns_guru'  => 'required',
@@ -94,7 +102,8 @@ class DataGuruController extends Controller
             'gender.required'  => 'Jenis Kelamin wajib diisi',
             'nipa.required'  => 'NIPA wajib diisi',
             'nipa.unique'  => 'NIPA sudah digunakan',
-            'ttl.required'  => 'Tempat, Tanggal, Lahir wajib diisi',
+            'tempat_lahir.required'  => 'Tempat Lahir wajib diisi',
+            'tanggal_lahir.required'  => 'Tanggal Lahir wajib diisi',
             'nuptk.required'  => 'NUPTK wajib diisi',
             'nrg.required'  => 'NRG wajib diisi',
             'jns_guru.required'  => 'Jenis Guru wajib diisi',
@@ -135,7 +144,8 @@ class DataGuruController extends Controller
             'nama_guru'  => 'required',
             'gender'  => 'required',
             'nipa'  => 'required|unique:mst_guru,id',
-            'ttl'  => 'required',
+            'tempat_lahir'  => 'required',
+            'tanggal_lahir'  => 'required',
             'nuptk'  => 'required',
             'nrg'  => 'required',
             'jns_guru'  => 'required',
@@ -163,7 +173,8 @@ class DataGuruController extends Controller
             'gender.required'  => 'Jenis Kelamin wajib diisi',
             'nipa.required'  => 'NIPA wajib diisi',
             'nipa.unique'  => 'NIPA sudah digunakan',
-            'ttl.required'  => 'Tempat, Tanggal, Lahir wajib diisi',
+            'tempat_lahir.required'  => 'Tempat Lahir wajib diisi',
+            'tanggal_lahir.required'  => 'Tanggal Lahir wajib diisi',
             'nuptk.required'  => 'NUPTK wajib diisi',
             'nrg.required'  => 'NRG wajib diisi',
             'jns_guru.required'  => 'Jenis Guru wajib diisi',
