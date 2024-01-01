@@ -251,7 +251,7 @@
 
             </div>
             <div class="card-footer justify-content-between" style="display: flex">
-                <a href="{{ route('data_kriteria') }}" class="btn btn-sm btn-warning">Kembali</a>
+                <a href="{{ route('data_guru') }}" class="btn btn-sm btn-warning">Kembali</a>
                 @if (!empty($guru))
                 <button class="btn btn-sm btn-primary">Update</button>
                 @else

@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Guru;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-use DataTables;
+use DataTables, Carbon\Carbon;
 
 class DataGuruController extends Controller
 {
@@ -21,7 +21,7 @@ class DataGuruController extends Controller
                 ->addColumn('action', function ($data) {
                     return '
                     <div class="btn-group">
-                        <button type="button" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></button>
+                        <a href="'. route('detail_guru', $data->id) .'" class="btn btn-primary btn-sm"><i class="fas fa-eye"></i></a>
                         <a href="' . route('edit_guru', $data->id) . '" class="btn btn-warning btn-sm"><i class="fas fa-pencil-alt"></i></a>
                         <button type="button" class="btn btn-danger btn-sm" onclick="deleteData(`' . route('destroy_guru', $data->id) . '`)"><i class="fas fa-trash"></i></button>
                     </div> 
@@ -208,6 +208,12 @@ class DataGuruController extends Controller
         $guru->update($data);
 
         return redirect('/data-guru')->with('success', 'Data berhasil diupdate.');
+    }
+
+    function detail($id)
+    {
+        $guru = Guru::find($id);
+        return view('pages.data_guru.detail', compact('guru'));
     }
 
     function destroy($id)

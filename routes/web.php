@@ -38,6 +38,7 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/tambah', [DataGuruController::class, 'create'])->name('create_guru');
             Route::post('/store', [DataGuruController::class, 'store'])->name('store_guru');
             Route::get('/edit{id}', [DataGuruController::class, 'edit'])->name('edit_guru');
+            Route::get('/detail{id}', [DataGuruController::class, 'detail'])->name('detail_guru');
             Route::post('/update{id}', [DataGuruController::class, 'update'])->name('update_guru');
             Route::delete('/hapus/{id}', [DataGuruController::class, 'destroy'])->name('destroy_guru');
         });
