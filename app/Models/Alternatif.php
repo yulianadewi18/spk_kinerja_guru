@@ -12,6 +12,10 @@ class Alternatif extends Model
     protected $table = 'mst_alternatif';
     
     protected $fillable = [
-        'kode_alternatif', 'nama_alternatif',
+        'kode_alternatif', 'id_guru',
     ];
+    
+    public function alternatif(){
+        return $this->hasOne(Guru::class, 'id', 'id_guru');
+    }
 }

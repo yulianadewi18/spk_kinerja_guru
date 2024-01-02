@@ -16,9 +16,11 @@ class CreateMstAlternatifTable extends Migration
         Schema::create('mst_alternatif', function (Blueprint $table) {
                 $table->id();
                 $table->string('kode_alternatif');
-                $table->string('nama_kriteria');
+                $table->unsignedBigInteger('id_guru');
+                $table->foreign('id_guru')->references('id')->on('mst_guru')->onDelete('restrict')->onUpdate('cascade');
+                
                 $table->timestamps();
-        });
+            });
     }
 
     /**

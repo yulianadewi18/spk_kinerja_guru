@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
+use App\Models\Guru;
 use Illuminate\Http\Request;
 use DataTables;
 
@@ -13,6 +14,9 @@ class DataAlternatifController extends Controller
         if ($request->ajax()) {
             $fetchAll = DataTables::of($data_alternatif)
             ->addIndexColumn()
+            ->addColumn('nama_alternatif', function ($data) {
+                return $data->alternatif['nama_guru'];
+            })
             ->addColumn('action', function ($data) {
                 return'
                     <a href="'. route('edit_alternatif',$data->id) .'" class="btn btn-warning btn-sm" >Edit</a>
@@ -27,21 +31,23 @@ class DataAlternatifController extends Controller
     }
 
     function create() {
-        return view('pages.data_alternatif.form');
+        $guru = Guru::get();
+        return view('pages.data_alternatif.form',compact('guru'));
     }
     
     function store(Request $request) {
         $request->session()->flash('kode_alternatif', $request->kode_alternatif);
-        $request->session()->flash('nama_alternatif', $request->nama_alternatif);
+        $request->session()->flash('id_guru', $request->nama_alternatif);
 
         $data = $request->validate([
-            'kode_alternatif'  => 'required|unique:mst_kriteria',
-            'nama_alternatif'  => 'required',
+            'kode_alternatif'  => 'required|unique:mst_alternatif',
+            'id_guru'  => 'required|unique:mst_alternatif',
         
         ],[
-            'kode_alternatif.required'  => 'Kode alternatif wajib diisi',
+            'kode_alternatif.required'  => 'Kode Alternatif wajib diisi',
             'kode_alternatif.unique'  => 'Kode Alternatif sudah terpakai',
-            'nama_alternatif.required'  => 'Nama alternatif wajib diisi',
+            'id_guru.required'  => 'Pilih Alternatif',
+            'id_guru.unique'  => 'Nama Alternatif sudah ada',
         ]);
 
         Alternatif::create($data);
@@ -50,18 +56,20 @@ class DataAlternatifController extends Controller
 
     function edit($id) {
         $alternatif = Alternatif::find($id);
-        return view('pages.data_alternatif.form',compact('alternatif'));
+        $guru = Guru::get();
+        return view('pages.data_alternatif.form',compact(['alternatif','guru']));
     }
 
     function update(Request $request, $id) {
         $data = $request->validate([
-            'kode_alternatif'  => 'required|unique:mst_kriteria',
-            'nama_alternatif'  => 'required',
+            'kode_alternatif'   => 'required|unique:mst_alternatif,kode_alternatif,'.$id,
+            'id_guru'           => 'required|unique:mst_alternatif,id_guru,'.$id,
         
         ],[
-            'kode_alternatif.required'  => 'Kode alternatif wajib diisi',
-            'kode_alternatif.unique'  => 'Kode alternatif sudah terpakai',
-            'nama_alternatif.required'  => 'Nama alternatif wajib diisi',
+            'kode_alternatif.required'  => 'Kode Alternatif wajib diisi',
+            'kode_alternatif.unique'  => 'Kode Alternatif sudah terpakai',
+            'id_guru.required'  => 'Pilih Alternatif',
+            'id_guru.unique'  => 'Nama Alternatif sudah ada',
         ]);
 
         Alternatif::find($id)->update($data);

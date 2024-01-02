@@ -22,7 +22,7 @@
                 <thead>
                     <tr>
                     <th width="5%">No</th>
-                            <th width="5%">Kode</th>
+                        <th width="5%">Kode</th>
                         <th>Nama Alternatif</th>
                         <th class="text-center" width="20%">Action</th>
                     </tr>
@@ -53,7 +53,7 @@
             "emptyTable": "Data Alternatif kosong."
         },
         columnDefs: [{
-            targets: 0,
+            targets: 3,
             className: 'text-center'
         }],
         columns:[
