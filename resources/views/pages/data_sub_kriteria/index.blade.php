@@ -54,7 +54,7 @@
             },
             columnDefs: [
                 {
-                    targets: 0,
+                    targets: [0,3],
                     className: 'text-center'
                 }
             ],

@@ -43,8 +43,8 @@ class DataSubKriteriaController extends Controller
             'sub_kriteria'  => 'required|unique:mst_sub_kriteria',
             'bobot'  => 'required',
         ], [
-            'sub_kriteria.required'  => 'Kode Sub Kriteria wajib diisi',
-            'sub_kriteria.unique'  => 'Kode Sub Kriteria sudah terpakai',
+            'sub_kriteria.required'  => 'Sub Kriteria wajib diisi',
+            'sub_kriteria.unique'  => 'Sub Kriteria sudah ada',
             'bobot.required'  => 'Bobot Sub Kriteria wajib diisi',
         ]);
 
@@ -61,7 +61,7 @@ class DataSubKriteriaController extends Controller
     function update(Request $request, $id)
     {
         $data = $request->validate([
-            'sub_kriteria'  => 'required|unique:mst_sub_kriteria,id',
+            'sub_kriteria'  => 'required|unique:mst_sub_kriteria,sub_kriteria,'.$id,
             'bobot'  => 'required',
         ], [
             'sub_kriteria.required'  => 'Kode Sub Kriteria wajib diisi',

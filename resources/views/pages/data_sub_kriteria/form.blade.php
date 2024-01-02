@@ -19,16 +19,16 @@
 <div class="card border-top-primary shadow mb-4">
     @if (!empty($subkriteria))
     <form action="{{ url('data-sub-kriteria/update').$subkriteria->id }}" method="POST">
+        <input type="hidden" class="form-control" name="id" @if(!empty($subkriteria)) value="{{ $subkriteria->id }}" @endif>
         @else
         <form action="{{ url('data-sub-kriteria/store') }}" method="POST">
             @endif
             @csrf
-            <input type="hidden" class="form-control" name="id" @if(!empty($subkriteria)) value="{{ $subkriteria->id }}" @endif>
             <div class="card-body pt-3">
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="form-group">
-                            <label for="">Kode Sub Kriteria</label>
+                            <label for="">Sub Kriteria</label>
                             <input type="text" class="form-control" name="sub_kriteria" @if(!empty($subkriteria)) value="{{ $subkriteria->sub_kriteria }}" @else value="{{ Session::get('bobot') }}" @endif>
                         </div>
                         
