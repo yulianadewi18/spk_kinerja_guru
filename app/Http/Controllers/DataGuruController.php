@@ -143,7 +143,7 @@ class DataGuruController extends Controller
         $data = $request->validate([
             'nama_guru'  => 'required',
             'gender'  => 'required',
-            'nipa'  => 'required|unique:mst_guru,id',
+            'nipa'  => 'required|unique:mst_guru,nipa,'.$id,
             'tempat_lahir'  => 'required',
             'tanggal_lahir'  => 'required',
             'nuptk'  => 'required',
