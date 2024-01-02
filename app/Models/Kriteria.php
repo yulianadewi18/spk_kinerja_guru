@@ -12,6 +12,6 @@ class Kriteria extends Model
     protected $table = 'mst_kriteria';
     
     protected $fillable = [
-        'kode_kriteria', 'nama_kriteria', 'bobot_kriteria',
+        'kode_kriteria', 'nama_kriteria', 'sifat', 'bobot_kriteria'
     ];
 }

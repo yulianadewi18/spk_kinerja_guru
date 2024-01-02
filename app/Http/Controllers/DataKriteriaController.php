@@ -34,16 +34,19 @@ class DataKriteriaController extends Controller
     function store(Request $request) {
         $request->session()->flash('kode_kriteria', $request->kode_kriteria);
         $request->session()->flash('nama_kriteria', $request->nama_kriteria);
+        $request->session()->flash('sifat', $request->bobot_kriteria);
         $request->session()->flash('bobot_kriteria', $request->bobot_kriteria);
 
         $data = $request->validate([
             'kode_kriteria'  => 'required|unique:mst_kriteria',
             'nama_kriteria'  => 'required',
+            'sifat'  => 'required',
             'bobot_kriteria'  => 'required',
         ],[
             'kode_kriteria.required'  => 'Kode Kriteria wajib diisi',
             'kode_kriteria.unique'  => 'Kode Kriteria sudah terpakai',
             'nama_kriteria.required'  => 'Nama Kriteria wajib diisi',
+            'sifat.required'  => 'Sifat Kriteria wajib diisi',
             'bobot_kriteria.required'  => 'Bobot Kriteria wajib diisi',
         ]);
 
@@ -58,13 +61,15 @@ class DataKriteriaController extends Controller
 
     function update(Request $request, $id) {
         $data = $request->validate([
-            'kode_kriteria'  => 'required|unique:mst_kriteria,id',
+            'kode_kriteria'  => 'required|unique:mst_kriteria,kode_kriteria,'.$id,
             'nama_kriteria'  => 'required',
+            'sifat'  => 'required',
             'bobot_kriteria'  => 'required',
         ],[
             'kode_kriteria.required'  => 'Kode Kriteria wajib diisi',
             'kode_kriteria.unique'  => 'Kode Kriteria sudah terpakai',
             'nama_kriteria.required'  => 'Nama Kriteria wajib diisi',
+            'sifat.required'  => 'Sifat Kriteria wajib diisi',
             'bobot_kriteria.required'  => 'Bobot Kriteria wajib diisi',
         ]);
 

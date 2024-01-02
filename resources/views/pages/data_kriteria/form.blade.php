@@ -19,11 +19,11 @@
 <div class="card border-top-primary shadow mb-4">
     @if (!empty($kriteria))
     <form action="{{ url('data-kriteria/update').$kriteria->id }}" method="POST">
+        <input type="hidden" class="form-control" name="id" @if(!empty($kriteria)) value="{{ $kriteria->id }}" @endif>
         @else
         <form action="{{ url('data-kriteria/store') }}" method="POST">
             @endif
             @csrf
-            <input type="hidden" class="form-control" name="id" @if(!empty($kriteria)) value="{{ $kriteria->id }}" @endif>
             <div class="card-body pt-3">
                 <div class="row">
                     <div class="col-lg-12">
@@ -37,6 +37,12 @@
                         <div class="form-group">
                             <label for="">Nama Kriteria</label>
                             <input type="text" class="form-control" name="nama_kriteria" @if(!empty($kriteria)) value="{{ $kriteria->nama_kriteria }}" @else value="{{ Session::get('nama_kriteria') }}" @endif>
+                        </div>
+                    </div>
+                    <div class="col-lg-12">
+                        <div class="form-group">
+                            <label for="">Sifat Kriteria</label>
+                            <input type="text" class="form-control" name="sifat" @if(!empty($kriteria)) value="{{ $kriteria->sifat }}" @else value="{{ Session::get('sifat') }}" @endif>
                         </div>
                     </div>
                     <div class="col-lg-12">
