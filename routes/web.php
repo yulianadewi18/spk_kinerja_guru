@@ -84,6 +84,7 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('penilaian-alternatif')->group(function () {
         Route::get('/', [PenilaianAlternatifController::class, 'index'])->name('penilaian_alternatif');
         Route::get('/tambah', [PenilaianAlternatifController::class, 'create'])->name('create_penilaian');
+        Route::post('/store', [PenilaianAlternatifController::class, 'store'])->name('store_penilaian');
     });
     Route::prefix('proses-saw')->group(function () {
         Route::get('/', [PerhitunganController::class, 'index'])->name('proses_saw');

@@ -4,26 +4,24 @@
     
 @section('content')
     <div class="card border-top-primary shadow mb-4">
-        <form action="">
+        <form action="{{ url('penilaian-alternatif/store') }}" method="POST">
+            @csrf
             <div class="card-body pt-3">
                 <div class="row">
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="">Periode</label>
-                            <select name="" id="" class="form-control">
-                                <option value="">Pilih</option>
-                                <option value="">Periode 1</option>
-                                <option value="">Periode 2</option>
-                            </select>
+                            <input type="text" class="form-control" name="periode">
                         </div>
                     </div>
                     <div class="col-lg-6">
                         <div class="form-group">
                             <label for="">Alternatif</label>
-                            <select name="" id="" class="form-control">
+                            <select name="id_alternatif" class="form-control">
                                 <option value="">Pilih</option>
-                                <option value="">Alternatif 1</option>
-                                <option value="">Alternatif 2</option>
+                                @foreach ($alternatif as $alt)
+                                <option value="{{ $alt->id }}">{{ $alt->alternatif['nama_guru'] }}</option>                                    
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -32,56 +30,33 @@
                         <hr style="border: 1px solid; margin-top:0px">
                         <table width="100%">
                             <tr>
-                                <td>Kriteria</td>
-                                <td>Nilai</td>
+                                <td><b>Kriteria</b></td>
+                                <td width="30%"><b>Sub Kriteria</b></td>
                             </tr>
+                            @foreach ($kriteria as $item)
                             <tr>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                                        <label class="custom-control-label" for="customCheck">Kriteria 1</label>
-                                    </div>
+                                <td scope="row">
+                                    <input type="hidden" value="{{ $item->id }}" name="id_kriteria[]">
+                                    {{ $loop->iteration }}. {{ $item->nama_kriteria }}
                                 </td>
                                 <td>
-                                    <select name="" id="" class="form-control mb-2">
+                                    <select name="id_sub[]" class="form-control mb-2">
                                         <option value="">Pilih</option>
-                                        <option value="">Nilai 1</option>
-                                        <option value="">Nilai 2</option>
+                                        @foreach ($subKriteria as $sub)
+                                        <option value="{{ $sub->id }}">{{ $sub->sub_kriteria }}</option>
+                                        @endforeach
                                     </select>
                                 </td>
                             </tr>
-                            <tr>
-                                <td>
-                                    <div class="custom-control custom-checkbox">
-                                        <input type="checkbox" class="custom-control-input" id="customCheck">
-                                        <label class="custom-control-label" for="customCheck">Kriteria 2</label>
-                                    </div>
-                                </td>
-                                <td>
-                                    <select name="" id="" class="form-control mb-2">
-                                        <option value="">Pilih</option>
-                                        <option value="">Nilai 1</option>
-                                        <option value="">Nilai 2</option>
-                                    </select>
-                                </td>
-                            </tr>
+                            @endforeach
                         </table>
                     </div>
                     <div class="col-lg-4">
                         <label for="" class="mt-3"><b>Keterangan Nilai</b></label>
-                        <p>*Untuk kriteria Daya Tahan, Umur, & Harga</p>
-                        <label for="" class="ml-4 mb-0">1 = Sangat Baik</label><br>
-                        <label for="" class="ml-4 mb-0">2 = Baik</label><br>
-                        <label for="" class="ml-4 mb-0">3 = Biasa</label><br>
-                        <label for="" class="ml-4 mb-0">4 = Buruk</label><br>
-                        <label for="" class="ml-4 mb-0">5 = Sangat Buruk</label>
-                        
-                        <p class="mt-4">*Untuk layanan Purna Jual</p>
-                        <label for="" class="ml-4 mb-0">1 = Sangat Baik</label><br>
-                        <label for="" class="ml-4 mb-0">2 = Baik</label><br>
-                        <label for="" class="ml-4 mb-0">3 = Biasa</label><br>
-                        <label for="" class="ml-4 mb-0">4 = Buruk</label><br>
-                        <label for="" class="ml-4 mb-0">5 = Sangat Buruk</label>
+                        <p class="mb-0">*Bobot pada setiap Sub Kriteria</p>
+                        @foreach ($subKriteria as $subs)
+                            <label for="" class="ml-4 mb-0">{{ $subs->bobot }} = {{ $subs->sub_kriteria }}</label><br>
+                        @endforeach
                     </div>
                 </div>
             </div>
