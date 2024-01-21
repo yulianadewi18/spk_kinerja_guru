@@ -20,7 +20,7 @@
                             <select name="id_alternatif" class="form-control">
                                 <option value="">Pilih</option>
                                 @foreach ($alternatif as $alt)
-                                <option value="{{ $alt->id }}">{{ $alt->alternatif['nama_guru'] }}</option>                                    
+                                <option value="{{ $alt->id }}">{{ $alt->guru['nama_guru'] }}</option>                                    
                                 @endforeach
                             </select>
                         </div>

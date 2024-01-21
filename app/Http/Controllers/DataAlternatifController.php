@@ -15,7 +15,7 @@ class DataAlternatifController extends Controller
             $fetchAll = DataTables::of($data_alternatif)
             ->addIndexColumn()
             ->addColumn('nama_alternatif', function ($data) {
-                return $data->alternatif['nama_guru'];
+                return $data->guru['nama_guru'];
             })
             ->addColumn('action', function ($data) {
                 return'

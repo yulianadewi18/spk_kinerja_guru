@@ -11,12 +11,12 @@ use App\Models\SubKriteria;
 class PenilaianAlternatifController extends Controller
 {
     function index() {
-        $penilaian = Penilaian::with(['guru','kriteria','subKriteria'])->get();
+        $penilaian = Penilaian::with(['alternatif','kriteria','subKriteria'])->get();
         return view('pages.penilaian.index',compact('penilaian'));
     }
 
     function create() {
-        $alternatif     = Alternatif::with('alternatif')->get();
+        $alternatif     = Alternatif::with('guru')->get();
         $kriteria       = Kriteria::get();
         $subKriteria    = SubKriteria::get();
         return view('pages.penilaian.form', compact(['alternatif','kriteria','subKriteria']));

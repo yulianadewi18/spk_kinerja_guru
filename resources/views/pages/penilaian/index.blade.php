@@ -27,7 +27,7 @@
                         @foreach ($penilaian as $item)
                         <tr>
                             <td class="text-center">{{ $loop->iteration }}</td>
-                            <td>{{ $item->guru->alternatif['nama_guru'] }}</td>
+                            <td>{{ $item->alternatif->guru['nama_guru'] }}</td>
                             <td>{{ $item->kriteria['nama_kriteria'] }}</td>
                             <td class="text-center">{{ $item->subKriteria['sub_kriteria'] }}</td>
                             <td class="text-center">

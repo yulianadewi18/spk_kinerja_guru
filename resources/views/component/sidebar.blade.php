@@ -62,8 +62,8 @@
             <span>Proses Perhitungan</span>
         </a>
     </li>  
-    <li class="nav-item {{ request()->segment(1) == 'proses-saw' ? 'active' : ''}}">
-        <a class="nav-link" href="{{ route('hapus_hasil') }}">
+    <li class="nav-item {{ request()->segment(1) == 'laporan-hasil' ? 'active' : ''}}">
+        <a class="nav-link" href="{{ route('laporan_hasil') }}">
             <i class="fas fa-fw fa-arrow-right"></i>
             <span>Data Hasil Keputusan</span>
         </a>

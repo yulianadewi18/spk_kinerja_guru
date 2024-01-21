@@ -10,41 +10,63 @@
         <div class="card-body pt-3">
             <h4 class="text-gray-900">1. Data Masing Masing Guru Terhadap Kriteria</h4>
             <div class="table-responsive">
-                <table class="table table-striped text-center" width="100%">
+                <table class="table table-striped table-sm" width="100%">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Alternatif</th>
-                            <th>Daya Tahan</th>
-                            <th>Umur</th>
-                            <th>Harga</th>
-                            <th>Layanan Purna Jual</th>
+                            <th class="text-center" rowspan="2" style="vertical-align: middle">Kode (Ai)</th>
+                            <th class="text-center" rowspan="2" style="vertical-align: middle">Keterangan</th>
+                            <th class="text-center" colspan="{{ count($kriteria) }}">Kode Kriteria</th>
+                        </tr>
+                        <tr>
+                            @foreach ($kriteria as $item)
+                                <th class="text-center">{{ $item->kode_kriteria }}</th>
+                            @endforeach
                         </tr>
                     </thead>
-                    <tbody>
+                    {{-- <tbody>
+                        
+                        @foreach ($alternatif as $alt)
                         <tr>
-                            <td>1</td>
-                            <td class="text-left">Guru 1</td>
-                            <td>4</td>
-                            <td>5</td>
-                            <td>3</td>
-                            <td>7</td>
+                            <td class="text-center">{{ $alt->kode_alternatif }}</td>
+                            <td>{{ $alt->guru['nama_guru'] }}</td>
+                            @foreach ($alt->penilaian as $nilai)
+                            <td class="text-center">{{ $nilai->id_sub }}</td>
+                            <?php
+                                $minMaxKriteria[$nilai->kriteria->kode_kriteria]['min'] > $nilai->id_sub && $minMaxKriteria[$nilai->kriteria->kode_kriteria]['min'] = $nilai->id_sub;
+                                $minMaxKriteria[$nilai->kriteria->kode_kriteria]['max'] < $nilai->id_sub && $minMaxKriteria[$nilai->kriteria->kode_kriteria]['max'] = $nilai->id_sub
+                            ?>
+                            @endforeach
                         </tr>
+                        @endforeach
+                        
+                    </tbody> --}}
+                    <tbody>
+                        @forelse ($alternatif as $alt => $valt)
+                            <tr>
+                                <td class="text-center">{{ $valt->kode_alternatif }}</td>
+                                <td>{{ $valt->guru['nama_guru'] }}</td>
+                                @foreach ($valt->penilaian as $nilai)
+                                    <td class="text-center">{{ $nilai->subKriteria['bobot'] }}</td>
+                                @endforeach
+                            </tr>
+                        @empty
+                            <tr>
+                                <td class="text-center" colspan="{{ count($kriteria) +2 }}">Data Kosong</td>
+                            </tr>
+                        @endforelse
                     </tbody>
                     <tfoot>
-                        <tr>
+                        <tr class="text-center">
                             <th colspan="2">Nilai Maks</th>
-                            <th class="bg-secondary text-white">5</th>
-                            <th class="bg-secondary text-white">5</th>
-                            <th class="bg-secondary text-white">4</th>
-                            <th class="bg-secondary text-white">7</th>
+                            @foreach ($kriteria as $key => $vkriteria)
+                                <th class="bg-secondary text-white">{{ max($minMax[$vkriteria->id]) }}</th>
+                            @endforeach
                         </tr>
-                        <tr>
+                        <tr class="text-center">
                             <th colspan="2">Nilai Min</th>
-                            <th class="bg-secondary text-white">2</th>
-                            <th class="bg-secondary text-white">3</th>
-                            <th class="bg-secondary text-white">3</th>
-                            <th class="bg-secondary text-white">3</th>
+                            @foreach ($kriteria as $key => $vkriteria)
+                                <th class="bg-secondary text-white">{{ min($minMax[$vkriteria->id]) }}</th>
+                            @endforeach
                         </tr>
                     </tfoot>
                 </table>
@@ -52,163 +74,60 @@
             
             <h4 class="text-gray-900 mt-4">2. Menghitung Nilai Normalisasi</h4> 
             <div class="table-responsive">
-                <table class="table table-striped text-center" width="100%">
+                <table class="table table-striped" width="100%">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Alternatif</th>
-                            <th>Daya Tahan</th>
-                            <th>Umur</th>
-                            <th>Harga</th>
-                            <th>Layanan Purna Jual</th>
+                            <th class="text-center" rowspan="2" style="vertical-align: middle;">Alternatif</th>
+                            <th class="text-center" colspan="{{ count($kriteria) }}">Kode Kriteria</th>
+                        </tr>
+                        <tr>
+                            @foreach ($kriteria as $item)
+                                <th class="text-center">{{ $item->kode_kriteria }}</th>
+                            @endforeach
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="text-left">Guru 1</td>
-                            <td>4/5</td>
-                            <td>5/5</td>
-                            <td>3/4</td>
-                            <td>7/7</td>
-                        </tr>
+                        @foreach ($normalisasi as $key => $value)
+                            <tr>
+                                <td width="20%">{{ $key }}</td>
+                                @foreach ($value as $key_1 => $value_1)
+                                    <td class="text-center">{{ number_format($value_1 ,2) }}</td>
+                                @endforeach
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>
             
-            <h4 class="text-gray-900 mt-4">3. Hasil Normalisasi</h4> 
+            <h4 class="text-gray-900 mt-4">3. Perankingan</h4> 
             <div class="table-responsive">
                 <table class="table table-striped text-center" width="100%">
                     <thead>
                         <tr>
-                            <th>No</th>
-                            <th>Alternatif</th>
-                            <th>Daya Tahan</th>
-                            <th>Umur</th>
-                            <th>Harga</th>
-                            <th>Layanan Purna Jual</th>
+                            <th>Kode Kriteria</th>
+                            @foreach ($kriteria as $item)
+                                <th class="text-center">{{ $item->kode_kriteria }}</th>
+                            @endforeach
+                            <th rowspan="2" style="vertical-align: middle">Total</th>
+                            <th rowspan="2" style="vertical-align: middle">Rank</th>
+                        </tr>
+                        <tr>
+                            <th>Bobot</th>
+                            @foreach ($kriteria as $item)
+                                <th class="text-center">{{ $item->bobot_kriteria }}</th>
+                            @endforeach
                         </tr>
                     </thead>
                     <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="text-left">Guru 1</td>
-                            <td>0.8</td>
-                            <td>1</td>
-                            <td>0.8</td>
-                            <td>1</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <h4 class="text-gray-900 mt-4">4. Menghitung Nilai Refrensi</h4> 
-            <div class="table-responsive">
-                <table class="table table-striped text-center" width="100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Alternatif</th>
-                            <th>Daya Tahan</th>
-                            <th>Umur</th>
-                            <th>Harga</th>
-                            <th>Layanan Purna Jual</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="text-left">Guru 1</td>
-                            <td>0.8 x 0.2</td>
-                            <td>1 x 0.3</td>
-                            <td>0.8 x 0.35</td>
-                            <td>1 x 0.15</td>
-                        </tr>
-                    </tbody>
-                    <tfoot>
-                        <tr>
-                            <th colspan="2">Bobot Kriteria</th>
-                            <th class="bg-secondary text-white">0.2</th>
-                            <th class="bg-secondary text-white">0.3</th>
-                            <th class="bg-secondary text-white">0.35</th>
-                            <th class="bg-secondary text-white">0.15</th>
-                        </tr>
-                    </tfoot>
-                </table>
-            </div>
-            
-            <h4 class="text-gray-900 mt-4">5. Hasil Prefrensi</h4> 
-            <div class="table-responsive">
-                <table class="table table-striped text-center" width="100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Alternatif</th>
-                            <th>Daya Tahan</th>
-                            <th>Umur</th>
-                            <th>Harga</th>
-                            <th>Layanan Purna Jual</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="text-left">Guru 1</td>
-                            <td>0.16</td>
-                            <td>0.3</td>
-                            <td>0.28</td>
-                            <td>0.15</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <h4 class="text-gray-900 mt-4">6. Menghitung Total Nilai Prefrensi</h4> 
-            <div class="table-responsive">
-                <table class="table table-striped text-center" width="100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Alternatif</th>
-                            <th>Daya Tahan</th>
-                            <th>Umur</th>
-                            <th>Harga</th>
-                            <th>Layanan Purna Jual</th>
-                            <th>Total Nilai Prefrensi</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="text-left">Guru 1</td>
-                            <td>0.16</td>
-                            <td>0.3</td>
-                            <td>0.28</td>
-                            <td>0.15</td>
-                            <td class="bg-secondary text-white">0.89</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-            
-            <h4 class="text-gray-900 mt-4">7. Perankingan</h4> 
-            <div class="table-responsive">
-                <table class="table table-striped text-center" width="100%">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Nama Alternatif</th>
-                            <th>Nilai Prefrensi</th>
-                            <th>Ranking</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>1</td>
-                            <td class="text-left">Guru 1</td>
-                            <td>0.89</td>
-                            <td class="bg-secondary text-white">1</td>
-                        </tr>
+                        @foreach ($rank as $key => $value)
+                            <tr>
+                                <td width="20%">{{ $key }}</td>
+                                @foreach ($value as $key_1 => $value_1)
+                                    <td class="text-center">{{ number_format($value_1 ,2) }}</td>
+                                @endforeach
+                                <td>{{ $loop->iteration }}</td>
+                            </tr>
+                        @endforeach
                     </tbody>
                 </table>
             </div>

@@ -14,8 +14,16 @@ class Alternatif extends Model
     protected $fillable = [
         'kode_alternatif', 'id_guru',
     ];
+
+    function penilaian() {
+        return $this->hasMany(Penilaian::class, 'id_alternatif');
+    }
     
-    public function alternatif(){
+    public function guru(){
         return $this->hasOne(Guru::class, 'id', 'id_guru');
+    }
+
+    function kriteria() {
+        return $this->hasMany(Penilaian::class, 'id_alternatif', 'id');
     }
 }
