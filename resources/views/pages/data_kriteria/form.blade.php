@@ -31,7 +31,7 @@
                             <label for="">Kode Kriteria</label>
                             <input type="text" class="form-control" name="kode_kriteria" @if(!empty($kriteria)) value="{{ $kriteria->kode_kriteria }}" @else value="{{ Session::get('nama_kriteria') }}" @endif>
                         </div>
-                        
+
                     </div>
                     <div class="col-lg-12">
                         <div class="form-group">
@@ -42,7 +42,10 @@
                     <div class="col-lg-12">
                         <div class="form-group">
                             <label for="">Sifat Kriteria</label>
-                            <input type="text" class="form-control" name="sifat" @if(!empty($kriteria)) value="{{ $kriteria->sifat }}" @else value="{{ Session::get('sifat') }}" @endif>
+                            <select class="form-control dataGuru" name="sifat">
+                                <option value="benefit" @if (!empty($kriteria)) {{ ($kriteria->sifat == 'benefit') ? 'selected' : '' }} @endif>Benefit</option>
+                                <option value="cost" @if (!empty($kriteria)) {{ ($kriteria->sifat == 'cost') ? 'selected' : '' }} @endif>Cost</option>
+                            </select>
                         </div>
                     </div>
                     <div class="col-lg-12">
