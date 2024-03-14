@@ -12,7 +12,7 @@ class Penilaian extends Model
     protected $table = 'penilaian_alternatif';
     
     protected $fillable = [
-        'periode', 'id_alternatif', 'id_kriteria', 'id_sub',
+        'periode', 'id_alternatif', 'id_kriteria', 'id_sub','id_admin'
     ];
     
     public function alternatif(){

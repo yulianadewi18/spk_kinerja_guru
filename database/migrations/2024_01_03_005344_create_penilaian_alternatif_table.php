@@ -22,6 +22,7 @@ class CreatePenilaianAlternatifTable extends Migration
             $table->foreign('id_kriteria')->references('id')->on('mst_kriteria')->onDelete('restrict')->onUpdate('cascade');
             $table->unsignedBigInteger('id_sub');
             $table->foreign('id_sub')->references('id')->on('mst_sub_kriteria')->onDelete('restrict')->onUpdate('cascade');
+            $table->integer('id_admin');
             $table->timestamps();
         });
     }

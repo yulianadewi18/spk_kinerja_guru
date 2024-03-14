@@ -5,10 +5,12 @@ use App\Http\Controllers\Auth\{
     LoginController,
 };
 use App\Http\Controllers\{
+    DashboardController,
     DataGuruController,
     DataAlternatifController,
     DataKriteriaController,
     DataSubKriteriaController,
+    HasilPerhitunganController,
     PenilaianAlternatifController,
     PerhitunganController,
     UsersController
@@ -31,8 +33,6 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 
 Route::middleware(['auth'])->group(function () {
-    // Admin Role
-    Route::middleware('admin')->group(function () {
         Route::prefix('data-guru')->group(function () {
             Route::get('/', [DataGuruController::class, 'index'])->name('data_guru');
             Route::get('/tambah', [DataGuruController::class, 'create'])->name('create_guru');
@@ -76,24 +76,22 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/hapus/{id}', [UsersController::class, 'destroy'])->name('destroy_pengguna');
         });
     });
-    // Admin & Penguji role
-    Route::get('/dashboard', function () {
-        return view('pages.dashboard');
-    })->name('dashboard');
+    // Admin & Penilai role
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     Route::prefix('penilaian-alternatif')->group(function () {
         Route::get('/', [PenilaianAlternatifController::class, 'index'])->name('penilaian_alternatif');
         Route::get('/tambah', [PenilaianAlternatifController::class, 'create'])->name('create_penilaian');
         Route::post('/store', [PenilaianAlternatifController::class, 'store'])->name('store_penilaian');
+        Route::delete('/delete/{id}', [PenilaianAlternatifController::class, 'delete'])->name('delete_penilaian');
+        Route::get('/edit/{id}', [PenilaianAlternatifController::class, 'edit'])->name('edit_penilaian');
+        Route::post('/update/{id}', [PenilaianAlternatifController::class, 'update'])->name('update_penilaian');
     });
+
     Route::prefix('proses-saw')->group(function () {
         Route::get('/', [PerhitunganController::class, 'index'])->name('proses_saw');
     });
 
-    Route::get('/laporan-hasil', function () {
-        return view('pages.dashboard');
-    })->name('laporan_hasil');
-    Route::get('/hapus-hasil', function () {
-        return view('pages.dashboard');
-    })->name('hapus_hasil');
-});
+    Route::prefix('hasil-perhitungan')->group(function () {
+        Route::get('/', [HasilPerhitunganController::class, 'index'])->name('laporan_hasil');
+    });

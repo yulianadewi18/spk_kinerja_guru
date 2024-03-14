@@ -1,38 +1,28 @@
 @extends('layout.master')
 
-@section('title', 'Tambah Klasifikasi')
+@section('title', 'Edit Penilaian Alternatif')
 
 @section('content')
 <div class="card border-top-primary shadow mb-4">
-    <form action="{{ url('penilaian-alternatif/store') }}" method="POST" id="penilaianForm">
+    <form action="{{ route('update_penilaian', ['id' => $penilaian->id]) }}" method="POST" id="penilaianForm">
         @csrf
+        @if(isset($edit))
+        @method('PUT') {{-- Use 'PUT' for updating --}}
+        @endif
+
         <div class="card-body pt-3">
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
                         <label for="periode">Periode</label>
-                        <select class="form-control" id="periode" name="periode">
-                            @php
-                            $tahunAkhir = date('Y');
-                            $tahunAwal = $tahunAkhir - 10;
-                            @endphp
-                            @for ($tahun = $tahunAkhir; $tahun >= $tahunAwal; $tahun--)
-                            @php
-                            $periode = $tahun . '-' . ($tahun + 1);
-                            @endphp
-                            <option value="{{ $periode }}">{{ $periode }}</option>
-                            @endfor
-                        </select>
+                        <input type="text" class="form-control" name="periode" value="{{ isset($penilaian) ? $penilaian->periode : '' }}" readonly>
                     </div>
                 </div>
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="">Alternatif</label>
-                        <select name="id_alternatif" class="form-control">
-                            <option value="">Pilih</option>
-                            @foreach ($alternatif as $alt)
-                            <option value="{{ $alt->id }}">{{ $alt->guru['nama_guru'] }}</option>
-                            @endforeach
+                        <label for="id_alternatif">Alternatif</label>
+                        <select name="id_alternatif" class="form-control" readonly>
+                            <option value="{{ isset($penilaian) ? $penilaian->id_alternatif : '' }}" selected>{{ isset($penilaian) ? $penilaian->alternatif->guru->nama_guru : 'Pilih' }}</option>
                         </select>
                     </div>
                 </div>
@@ -54,7 +44,7 @@
                                 <select name="id_sub[]" class="form-control mb-2">
                                     <option value="">Pilih</option>
                                     @foreach ($subKriteria as $sub)
-                                    <option value="{{ $sub->id }}">{{ $sub->sub_kriteria }}</option>
+                                    <option value="{{ $sub->id }}" {{ isset($penilaian) && $sub->id == $penilaian->id_sub ? 'selected' : '' }}>{{ $sub->sub_kriteria }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -62,27 +52,17 @@
                         @endforeach
                     </table>
                 </div>
-                <div class="col-lg-4">
-                    <label for="" class="mt-3"><b>Keterangan Nilai</b></label>
-                    <p class="mb-0">*Bobot pada setiap Sub Kriteria</p>
-                    @foreach ($subKriteria as $subs)
-                    <label for="" class="ml-4 mb-0">{{ $subs->bobot }} = {{ $subs->sub_kriteria }}</label><br>
-                    @endforeach
-                </div>
             </div>
         </div>
+
         <div class="card-footer" style="display: flex; justify-content: space-between!important;">
-            <button type="button" class="btn btn-sm btn-warning" onclick="goBack()">Kembali</button>
+            <a href="{{ route('penilaian_alternatif') }}" class="btn btn-sm btn-warning">Kembali</a>
             <button type="button" class="btn btn-sm btn-primary" onclick="validateAndSubmit()">Simpan</button>
         </div>
     </form>
 </div>
 
 <script>
-    function goBack() {
-        window.history.back();
-    }
-
     function validateAndSubmit() {
         var isValid = validateForm();
 
@@ -98,23 +78,12 @@
     }
 
     function validateForm() {
+        // Add any additional validation logic as needed
+
         var periode = document.getElementsByName('periode')[0].value;
         var idAlternatif = document.getElementsByName('id_alternatif')[0].value;
-        var idSubValues = document.getElementsByName('id_sub[]');
 
-        // Check if periode and idAlternatif are not empty
-        if (periode.trim() === '' || idAlternatif.trim() === '') {
-            return false;
-        }
-
-        // Check if at least one id_sub is selected for each kriteria
-        for (var i = 0; i < idSubValues.length; i++) {
-            if (idSubValues[i].value.trim() === '') {
-                return false;
-            }
-        }
-
-        return true;
+        return periode.trim() !== '' && idAlternatif.trim() !== '';
     }
 </script>
 
