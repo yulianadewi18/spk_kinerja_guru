@@ -35,7 +35,17 @@ Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
 Route::middleware(['auth'])->group(function () {
+    // Admin Role
     Route::middleware('admin')->group(function () {
+        Route::prefix('data-guru')->group(function () {
+            Route::get('/', [DataGuruController::class, 'index'])->name('data_guru');
+            Route::get('/tambah', [DataGuruController::class, 'create'])->name('create_guru');
+            Route::post('/store', [DataGuruController::class, 'store'])->name('store_guru');
+            Route::get('/edit{id}', [DataGuruController::class, 'edit'])->name('edit_guru');
+            Route::get('/detail{id}', [DataGuruController::class, 'detail'])->name('detail_guru');
+            Route::post('/update{id}', [DataGuruController::class, 'update'])->name('update_guru');
+            Route::delete('/hapus/{id}', [DataGuruController::class, 'destroy'])->name('destroy_guru');
+        });
         Route::prefix('data-kriteria')->group(function () {
             Route::get('/', [DataKriteriaController::class, 'index'])->name('data_kriteria');
             Route::get('/tambah', [DataKriteriaController::class, 'create'])->name('create_kriteria');
@@ -81,23 +91,31 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/hapus/{id}', [DataAlternatifController::class, 'destroy'])->name('destroy_alternatif');
         });
 
-
-        Route::prefix('penilaian-alternatif')->group(function () {
-            Route::get('/', [PenilaianAlternatifController::class, 'index'])->name('penilaian_alternatif');
-            Route::get('/tambah', [PenilaianAlternatifController::class, 'create'])->name('create_penilaian');
-            Route::post('/store', [PenilaianAlternatifController::class, 'store'])->name('store_penilaian');
-            Route::delete('/delete/{kode_alternatif}/{periode}', [PenilaianAlternatifController::class, 'delete'])->name('delete_penilaian');
-            Route::get('/edit/{kode_alternatif}/{periode}', [PenilaianAlternatifController::class, 'edit'])->name('edit_penilaian');
-            Route::post('/update/{kode_alternatif}/{periode}', [PenilaianAlternatifController::class, 'update'])
-                ->name('update_penilaian');
-        });
-
-        Route::prefix('proses-saw')->group(function () {
-            Route::get('/', [PerhitunganController::class, 'index'])->name('proses_saw');
-        });
-
-        Route::prefix('hasil-perhitungan')->group(function () {
-            Route::get('/', [HasilPerhitunganController::class, 'index'])->name('laporan_hasil');
+        Route::prefix('data-pengguna')->group(function () {
+            Route::get('/', [UsersController::class, 'index'])->name('data_pengguna');
+            Route::get('/tambah', [UsersController::class, 'create'])->name('create_pengguna');
+            Route::post('/store', [UsersController::class, 'store'])->name('store_pengguna');
+            Route::delete('/hapus/{id}', [UsersController::class, 'destroy'])->name('destroy_pengguna');
         });
     });
+    // Admin & Penguji role
+    Route::get('/dashboard', function () {
+        return view('pages.dashboard');
+    })->name('dashboard');
+
+    Route::prefix('penilaian-alternatif')->group(function () {
+        Route::get('/', [PenilaianAlternatifController::class, 'index'])->name('penilaian_alternatif');
+        Route::get('/tambah', [PenilaianAlternatifController::class, 'create'])->name('create_penilaian');
+        Route::post('/store', [PenilaianAlternatifController::class, 'store'])->name('store_penilaian');
+    });
+    Route::prefix('proses-saw')->group(function () {
+        Route::get('/', [PerhitunganController::class, 'index'])->name('proses_saw');
+    });
+
+    Route::get('/laporan-hasil', function () {
+        return view('pages.dashboard');
+    })->name('laporan_hasil');
+    Route::get('/hapus-hasil', function () {
+        return view('pages.dashboard');
+    })->name('hapus_hasil');
 });

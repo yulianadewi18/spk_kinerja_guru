@@ -22,10 +22,10 @@ class UsersSeeder extends Seeder
                 'roles' => 'admin',
             ],
             [
-                'name' => 'Penguji 1',
-                'username' => 'penguji1',
-                'password' => bcrypt('penguji01'),
-                'roles' => 'penguji',
+                'name' => 'penilai 1',
+                'username' => 'penilai1',
+                'password' => bcrypt('penilai01'),
+                'roles' => 'penilai',
             ],
         ];
 

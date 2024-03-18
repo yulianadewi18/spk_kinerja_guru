@@ -31,7 +31,6 @@
                 <a class="collapse-item {{ request()->segment(1) == 'data-guru' ? 'active' : ''}}" href="{{ route('data_guru') }}">Guru</a>
 
                 <a class="collapse-item {{ request()->segment(1) == 'data-alternatif' ? 'active' : ''}}" href="{{ route('data_alternatif') }}">Alternatif</a>
-                @if (Auth::user()->roles =="admin")
                 <a class="collapse-item {{ request()->segment(1) == 'data-kriteria' ? 'active' : ''}}" href="{{ route('data_kriteria') }}">Kriteria</a>
                 <a class="collapse-item {{ request()->segment(1) == 'data-sub-kriteria' ? 'active' : ''}}" href="{{ route('data_sub_kriteria') }}">Sub Kriteria</a>
                 @endif
@@ -56,210 +55,19 @@
             <i class="fas fa-fw fa-arrow-right"></i>
             <span>Penilaian Alternatif</span>
         </a>
-    </li>
-    @endif
-    @if (Auth::user()->roles == "admin")
-    <li class="nav-item {{ request()->segment(1) == 'penilaian-alternatif' ? 'active' : ''}}">
-        <a class="nav-link" href="#" data-toggle="modal" data-target="#alternatif">
-            <i class="fas fa-fw fa-arrow-right"></i>
-            <span>Penilaian Alternatif</span>
-        </a>
-    </li>
-    @endif
-    <div class="modal fade" id="alternatif" tabindex="-1" role="dialog" aria-labelledby="alternatifLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="alternatifLabel">Penilaian Alternatif</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('penilaian_alternatif') }}" method="GET" id="formPeriodePenguji3">
-                        <div class="form-group">
-                            <label for="penguji">Penguji:</label>
-                            <select name="penguji" id="penguji3" class="form-control">
-                                <option value="">Pilih Penguji</option>
-                                @foreach ($penguji as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        <button type="submit" class="btn btn-primary" id="submitBtn3" disabled>Submit</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            var pengujiSelect = document.getElementById("penguji3");
-            var submitBtn = document.getElementById("submitBtn3");
-
-            pengujiSelect.addEventListener("change", toggleSubmitBtn);
-
-            function toggleSubmitBtn() {
-                if (pengujiSelect.value) {
-                    submitBtn.disabled = false;
-                } else {
-                    submitBtn.disabled = true;
-                }
-            }
-        });
-        document.getElementById("formPeriodePenguji3").addEventListener("submitBtn3", function() {
-            // Membersihkan nilai input periode
-            document.getElementById("periode3").value = "";
-        });
-    </script>
-
-    <!-- Link untuk memicu Modal 1 -->
+    </li>  
     <li class="nav-item {{ request()->segment(1) == 'proses-saw' ? 'active' : ''}}">
         <a class="nav-link" href="#" data-toggle="modal" data-target="#periodeModal">
             <i class="fas fa-fw fa-arrow-right"></i>
             <span>Proses Perhitungan</span>
         </a>
-    </li>
-
-    <!-- Modal 1 -->
-    <div class="modal fade" id="periodeModal" tabindex="-1" role="dialog" aria-labelledby="periodeModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="periodeModalLabel">Proses Perhitungan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('proses_saw') }}" method="GET" id="formPeriodePenguji">
-                        <div class="form-group">
-                            <label for="periode">Periode:</label>
-                            <select name="periode" id="periode" class="form-control">
-                                <option value="">Pilih Periode</option>
-                                @foreach ($periode as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @if (Auth::user()->roles == "admin")
-                        <div class="form-group">
-                            <label for="penguji">Penguji:</label>
-                            <select name="penguji" id="penguji" class="form-control">
-                                <option value="">Pilih Penguji</option>
-                                @foreach ($penguji as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @endif
-                        <button type="submit" class="btn btn-primary" id="submitBtn" disabled>Submit</button>
-                    </form>
-
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            var periodeSelect = document.getElementById("periode");
-                            var pengujiSelect = document.getElementById("penguji");
-                            var submitBtn = document.getElementById("submitBtn");
-
-                            periodeSelect.addEventListener("change", toggleSubmitBtn);
-                            if (pengujiSelect) {
-                                pengujiSelect.addEventListener("change", toggleSubmitBtn);
-                            }
-
-                            function toggleSubmitBtn() {
-                                if (periodeSelect.value && (!pengujiSelect || pengujiSelect.value)) {
-                                    submitBtn.disabled = false;
-                                } else {
-                                    submitBtn.disabled = true;
-                                }
-                            }
-                        });
-                        document.getElementById("formPeriodePenguji").addEventListener("submitBtn", function() {
-                            // Membersihkan nilai input periode
-                            document.getElementById("periode").value = "";
-
-                            // Jika opsi penguji ada, membersihkan nilai input penguji
-                            var pengujiSelect = document.getElementById("penguji");
-                            if (pengujiSelect) {
-                                pengujiSelect.value = "";
-                            }
-                        });
-                    </script>
-
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Link untuk memicu Modal 2 -->
+    </li>  
     <li class="nav-item {{ request()->segment(1) == 'laporan-hasil' ? 'active' : ''}}">
         <a class="nav-link" href="#" data-toggle="modal" data-target="#periodeModal2">
             <i class="fas fa-fw fa-arrow-right"></i>
             <span>Data Hasil Keputusan</span>
         </a>
-    </li>
-
-    <!-- Modal 2 -->
-    <div class="modal fade" id="periodeModal2" tabindex="-1" role="dialog" aria-labelledby="periodeModalLabel2" aria-hidden="true">
-        <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="periodeModalLabel2">Data Hasil Keputusan</h5>
-                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                    </button>
-                </div>
-                <div class="modal-body">
-                    <form action="{{ route('laporan_hasil') }}" method="GET" id="formPeriodePenguji2">
-                        <div class="form-group">
-                            <label for="periode">Periode:</label>
-                            <select name="periode" id="periode2" class="form-control">
-                                <option value="">Pilih Periode</option>
-                                @foreach ($periode as $item)
-                                <option value="{{ $item }}">{{ $item }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @if (Auth::user()->roles == "admin")
-                        <div class="form-group">
-                            <label for="penguji">Penguji:</label>
-                            <select name="penguji" id="penguji2" class="form-control">
-                                <option value="">Pilih Penguji</option>
-                                @foreach ($penguji as $item)
-                                <option value="{{ $item->id }}">{{ $item->name }}</option>
-                                @endforeach
-                            </select>
-                        </div>
-                        @endif
-                        <button type="submit" class="btn btn-primary" id="submitBtn2" disabled>Submit</button>
-                    </form>
-                    <script>
-                        document.addEventListener("DOMContentLoaded", function() {
-                            var periodeSelect = document.getElementById("periode2");
-                            var pengujiSelect = document.getElementById("penguji2");
-                            var submitBtn = document.getElementById("submitBtn2");
-
-                            periodeSelect.addEventListener("change", toggleSubmitBtn);
-                            if (pengujiSelect) {
-                                pengujiSelect.addEventListener("change", toggleSubmitBtn);
-                            }
-
-                            function toggleSubmitBtn() {
-                                if (periodeSelect.value && (!pengujiSelect || pengujiSelect.value)) {
-                                    submitBtn.disabled = false;
-                                } else {
-                                    submitBtn.disabled = true;
-                                }
-                            }
-                        });
-                    </script>
-                </div>
-            </div>
-        </div>
-    </div>
-
+    </li>  
     @if (Auth::user()->roles == "admin")
     <hr class="sidebar-divider m-0">
     <li class="nav-item {{ request()->segment(1) == 'data-pengguna' ? 'active' : ''}}">

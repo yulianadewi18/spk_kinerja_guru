@@ -72,16 +72,9 @@
             </div>
         </div>
         <div class="card-footer" style="display: flex; justify-content: space-between!important;">
-            <button type="button" class="btn btn-sm btn-warning" onclick="goBack()">Kembali</button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button class="btn btn-sm btn-warning">Kembali</button>
+            <button class="btn btn-sm btn-primary">Simpan</button>
         </div>
     </form>
 </div>
-
-<script>
-    function goBack() {
-        window.history.back();
-    }
-</script>
-
 @endsection
