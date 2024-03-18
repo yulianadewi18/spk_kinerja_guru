@@ -23,23 +23,6 @@
                         @endforeach
                     </tr>
                 </thead>
-                {{-- <tbody>
-                        
-                        @foreach ($alternatif as $alt)
-                        <tr>
-                            <td class="text-center">{{ $alt->kode_alternatif }}</td>
-                <td>{{ $alt->guru['nama_guru'] }}</td>
-                @foreach ($alt->penilaian as $nilai)
-                <td class="text-center">{{ $nilai->id_sub }}</td>
-                <?php
-                $minMaxKriteria[$nilai->kriteria->kode_kriteria]['min'] > $nilai->id_sub && $minMaxKriteria[$nilai->kriteria->kode_kriteria]['min'] = $nilai->id_sub;
-                $minMaxKriteria[$nilai->kriteria->kode_kriteria]['max'] < $nilai->id_sub && $minMaxKriteria[$nilai->kriteria->kode_kriteria]['max'] = $nilai->id_sub
-                ?>
-                @endforeach
-                </tr>
-                @endforeach
-
-                </tbody> --}}
                 <tbody>
                     @forelse ($alternatif as $alt => $valt)
                     @if(count($valt->penilaian) > 0)
@@ -47,7 +30,11 @@
                         <td class="text-center">{{ $valt->kode_alternatif }}</td>
                         <td>{{ $valt->guru['nama_guru'] }}</td>
                         @foreach ($valt->penilaian as $nilai)
+                        @if($nilai->subKriteria)
                         <td class="text-center">{{ $nilai->subKriteria['bobot'] }}</td>
+                        @else
+                        <td class="text-center">Nilai Kosong</td>
+                        @endif
                         @endforeach
                     </tr>
                     @endif
@@ -102,7 +89,7 @@
                     <tr>
                         <td width="20%">{{ $key }}</td>
                         @foreach ($value as $key_1 => $value_1)
-                        <td class="text-center">{{ number_format($value_1 ,2) }}</td>
+                        <td class="text-center">{{ number_format($value_1 ?? 0, 2) }}</td>
                         @endforeach
                     </tr>
                     @endforeach
@@ -120,7 +107,7 @@
                         <th class="text-center">{{ $item->kode_kriteria }}</th>
                         @endforeach
                         <th rowspan="2" style="vertical-align: middle">Total</th>
-                        <!-- <th rowspan="2" style="vertical-align: middle">Rank</th> -->
+                        <th rowspan="2" style="vertical-align: middle">Ranking</th>
                     </tr>
                     <tr>
                         <th>Bobot</th>
@@ -134,9 +121,8 @@
                     <tr>
                         <td width="20%">{{ $key }}</td>
                         @foreach ($value as $key_1 => $value_1)
-                        <td class="text-center">{{ number_format($value_1 ,2) }}</td>
+                        <td class="text-center">{{ number_format($value_1 ?? 0, 2) }}</td>
                         @endforeach
-                        <!-- <td>{{ $loop->iteration }}</td> -->
                     </tr>
                     @endforeach
                 </tbody>

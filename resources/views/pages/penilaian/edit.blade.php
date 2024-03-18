@@ -1,10 +1,10 @@
 @extends('layout.master')
 
-@section('title', 'Tambah Klasifikasi')
+@section('title', 'Update Klasifikasi')
 
 @section('content')
 <div class="card border-top-primary shadow mb-4">
-    <form action="{{ url('penilaian-alternatif/store') }}" method="POST" id="penilaianForm">
+    <form action="{{ route('update_penilaian', ['kode_alternatif' => $penilaian[0]->id_alternatif, 'periode' => $penilaian[0]->periode]) }}" method="POST" id="penilaianForm">
         @csrf
         <div class="card-body pt-3">
             <div class="row">
@@ -15,12 +15,13 @@
                             @php
                             $tahunAkhir = date('Y');
                             $tahunAwal = $tahunAkhir - 10;
+                            $periodeFirst = $penilaian->first()->periode;
                             @endphp
                             @for ($tahun = $tahunAkhir; $tahun >= $tahunAwal; $tahun--)
                             @php
                             $periode = $tahun . '-' . ($tahun + 1);
                             @endphp
-                            <option value="{{ $periode }}">{{ $periode }}</option>
+                            <option value="{{ $periode }}" {{ $periode == $periodeFirst ? 'selected' : '' }}>{{ $periode }}</option>
                             @endfor
                         </select>
                     </div>
@@ -31,7 +32,7 @@
                         <select name="id_alternatif" class="form-control">
                             <option value="">Pilih</option>
                             @foreach ($alternatif as $alt)
-                            <option value="{{ $alt->id }}">{{$alt->kode_alternatif}} - {{ $alt->guru['nama_guru'] }}</option>
+                            <option value="{{ $alt->id }}" {{ $alt->id == $penilaian->first()->id_alternatif ? 'selected' : '' }}>{{ $alt->guru['nama_guru'] }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -44,7 +45,7 @@
                             <td><b>Kriteria</b></td>
                             <td width="30%"><b>Sub Kriteria</b></td>
                         </tr>
-                        @foreach ($kriteria as $item)
+                        @foreach ($kriteria as $key => $item)
                         <tr>
                             <td scope="row">
                                 <input type="hidden" value="{{ $item->id }}" name="id_kriteria[]">
@@ -54,7 +55,7 @@
                                 <select name="id_sub[]" class="form-control mb-2">
                                     <option value="">Pilih</option>
                                     @foreach ($subKriteria as $sub)
-                                    <option value="{{ $sub->id }}">{{ $sub->sub_kriteria }}</option>
+                                    <option value="{{ $sub->id }}" {{ $sub->id == $penilaian[$key]->id_sub ? 'selected' : '' }}>{{ $sub->id }}</option>
                                     @endforeach
                                 </select>
                             </td>
@@ -73,14 +74,48 @@
         </div>
         <div class="card-footer" style="display: flex; justify-content: space-between!important;">
             <button type="button" class="btn btn-sm btn-warning" onclick="goBack()">Kembali</button>
-            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+            <button type="button" class="btn btn-sm btn-primary" onclick="validateAndSubmit()">Simpan</button>
         </div>
-    </form>
+        </form>
 </div>
 
 <script>
     function goBack() {
         window.history.back();
+    }
+
+    function validateAndSubmit() {
+        var isValid = validateForm();
+
+        if (isValid) {
+            document.getElementById('penilaianForm').submit();
+        } else {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Ada data yang masih kosong! Silakan isi semua field.',
+            });
+        }
+    }
+
+    function validateForm() {
+        var periode = document.getElementsByName('periode')[0].value;
+        var idAlternatif = document.getElementsByName('id_alternatif')[0].value;
+        var idSubValues = document.getElementsByName('id_sub[]');
+
+        // Check if periode and idAlternatif are not empty
+        if (periode.trim() === '' || idAlternatif.trim() === '') {
+            return false;
+        }
+
+        // Check if at least one id_sub is selected for each kriteria
+        for (var i = 0; i < idSubValues.length; i++) {
+            if (idSubValues[i].value.trim() === '') {
+                return false;
+            }
+        }
+
+        return true;
     }
 </script>
 
