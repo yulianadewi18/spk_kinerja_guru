@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\Alternatif;
@@ -85,11 +86,17 @@ class HasilPerhitunganController extends Controller
                 $statusKeterangan[$key] = 'Kurang';
             }
         }
+        // Membuat koleksi Laravel dari array
+        $collection = collect($rank);
 
-        // Sort the ranks
-        arsort($rank);
+        // Mengurutkan koleksi berdasarkan nilai di dalam array ke-14 (descending)
+        $sortedDescending = $collection->sortByDesc(function ($item) {
+            return $item[14];
+        });
 
-        // Pass data to the view
+        // Mengubah kembali ke bentuk array
+        $rank = $sortedDescending->toArray();
+        // dd($sortedArray);
         return view('pages.hasil_perhitungan.index', compact('kriteria', 'alternatif', 'penilaian', 'minMax', 'normalisasi', 'rank'));
     }
 }

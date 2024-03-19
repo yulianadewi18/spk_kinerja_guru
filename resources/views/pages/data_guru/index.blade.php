@@ -22,7 +22,7 @@
                 <thead>
                     <tr>
                         <th width="2%">No</th>
-                        <th width="18%">Nama Guru</th>
+                        <th width="20%">Nama Guru</th>
                         <th width="8%">Jenis Kelamin</th>
                         <th width="10%">NIPA</th>
                         <th width="10%">TTL</th>

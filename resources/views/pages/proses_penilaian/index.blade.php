@@ -107,7 +107,6 @@
                         <th class="text-center">{{ $item->kode_kriteria }}</th>
                         @endforeach
                         <th rowspan="2" style="vertical-align: middle">Total</th>
-                        <th rowspan="2" style="vertical-align: middle">Ranking</th>
                     </tr>
                     <tr>
                         <th>Bobot</th>

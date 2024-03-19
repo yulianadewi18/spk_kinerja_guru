@@ -9,10 +9,14 @@
             <table class="table table-striped text-center" id="tabel" width="100%">
                 <thead>
                     <tr>
-                        <th class="text-left">Rank</th>
-                        <th width="18%">Nama Guru</th>
+                    <th width="2%">Peringkat</th>
+                        <th width="20%">Nama Guru</th>
                         <th width="8%">Jenis Kelamin</th>
                         <th width="10%">NIPA</th>
+                        <th width="5%">Jenis Guru</th>
+                        <th width="5%">Tugas Guru</th>
+                        <th width="12%">Alamat</th>
+                        <th width="10%">Telepon</th>
                         <th class="text-left">Nilai</th>
                         <th class="text-left">Status Keterangan</th>
                     </tr>
@@ -28,6 +32,10 @@
                         <td class="text-left">{{$guru->nama_guru}}</td>
                         <td class="text-left">{{$guru->gender}}</td>
                         <td class="text-left">{{$guru->nipa}}</td>
+                        <td class="text-left">{{$guru->jns_guru}}</td>
+                        <td class="text-left">{{$guru->tugas}}</td>
+                        <td class="text-left">{{$guru->jalan}}</td>
+                        <td class="text-left">{{$guru->nohp}}</td>
                         @foreach ($value as $key_1 => $value_1)
                         @if ($loop->last)
                         <td class="text-left">{{ number_format($value_1, 2) }}</td>
