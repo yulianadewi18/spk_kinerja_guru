@@ -77,6 +77,7 @@
         </div>
     </form>
 </div>
+<<<<<<< HEAD
 
 <script>
     function goBack() {
@@ -84,4 +85,6 @@
     }
 </script>
 
+=======
+>>>>>>> afe2ff37056cbc2ba48d0f5e5a38a8407f5789d8
 @endsection

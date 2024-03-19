@@ -71,6 +71,7 @@
         $('#dataTable').DataTable();
     });
 
+<<<<<<< HEAD
     function deletePenilaian(kodeAlternatif, periode) {
         Swal.fire({
             title: 'Apakah Anda yakin?',
@@ -111,4 +112,8 @@
 <script src="{{ url('sbAdmin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ url('sbAdmin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
+=======
+    <!-- Page level custom scripts -->
+    <script src="{{ url('sbAdmin/js/demo/datatables-demo.js') }}"></script>
+>>>>>>> afe2ff37056cbc2ba48d0f5e5a38a8407f5789d8
 @endpush
