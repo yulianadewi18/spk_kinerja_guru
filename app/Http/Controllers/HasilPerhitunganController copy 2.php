@@ -5,37 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Alternatif;
 use App\Models\Kriteria;
 use App\Models\Penilaian;
-use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\Request;
 
 class HasilPerhitunganController extends Controller
 {
-    public function index()
+    function index()
     {
-        $user_id = Auth::id(); // Get the current user's ID
-
-        $periode = request()->input('periode');
-        $penguji = request()->input('penguji');
-        // Retrieve data from the database
         $alternatif = Alternatif::with('penilaian.kriteria')->orderBy('kode_alternatif', 'ASC')->get();
         $kriteria = Kriteria::get();
-        if ($penguji == null) {
-            $penilaian = Penilaian::with('subKriteria')
-                ->when(Auth::user()->roles != "admin", function ($query) use ($user_id) {
-                    return $query->where('id_admin', $user_id);
-                })
-                ->where('periode', $periode) // Tambahkan kondisi where untuk periode
-                ->get();
-        } else {
-            $penilaian = Penilaian::with('subKriteria')
-                ->where('id_admin', $penguji)
-                ->where('periode', $periode) // Tambahkan kondisi where untuk periode
-                ->get();
-        }
+        $penilaian = Penilaian::with('subKriteria')->get();
+        // return response()->json($alternatif);
 
-        // Calculate min and max values for each criteria
-        $minMax = [];
-        foreach ($kriteria as $vkriteria) {
-            foreach ($penilaian as $vpenilaian) {
+        // mencari min max
+        foreach ($kriteria as $key => $vkriteria) {
+            foreach ($penilaian as $key_1 => $vpenilaian) {
                 if ($vkriteria->id == $vpenilaian->id_kriteria) {
                     if ($vkriteria->sifat == "benefit") {
                         $minMax[$vkriteria->id][] = $vpenilaian->subKriteria['bobot'];
@@ -46,36 +29,38 @@ class HasilPerhitunganController extends Controller
             }
         }
 
-        // Perform normalization
-        $normalisasi = [];
-        foreach ($penilaian as $vpenilaian) {
-            foreach ($kriteria as $vkriteria) {
+        // normalisasi
+        foreach ($penilaian as $key_1 => $vpenilaian) {
+            foreach ($kriteria as $key => $vkriteria) {
                 if ($vkriteria->id == $vpenilaian->id_kriteria) {
-                    if ($vkriteria->sifat == "benefit") {
+                    if ($vkriteria->sifat == "benefit") { //nilai sub_kriteria : nilai maksimal
                         $normalisasi[$vpenilaian->alternatif->guru['id']][$vkriteria->id] = $vpenilaian->subKriteria['bobot'] / max($minMax[$vkriteria->id]);
-                    } elseif ($vkriteria->sifat == "cost") {
+                    } elseif ($vkriteria->sifat == "cost") { //nilai minimal : nilai sub_kriteria
                         $normalisasi[$vpenilaian->alternatif->guru['id']][$vkriteria->id] = min($minMax[$vkriteria->id]) / $vpenilaian->subKriteria['bobot'];
                     }
                 }
             }
         }
 
-        // Perform ranking
-        $rank = [];
+        // perangkingan
         foreach ($normalisasi as $key => $vnormalisasi) {
-            foreach ($kriteria as $vkriteria) {
+            foreach ($kriteria as $key_1 => $vkriteria) { // hasil normalisasi x bobot_kriteria
+                // Check if the key exists in the $vnormalisasi array
                 if (isset($vnormalisasi[$vkriteria->id])) {
                     $rank[$key][] = $vnormalisasi[$vkriteria->id] * $vkriteria->bobot_kriteria;
                 } else {
+                    // Handle the case when the key is not found (you can skip it or handle it accordingly)
+                    // For example, you might want to assign a default value or log a message.
                     $rank[$key][] = 0; // Assign a default value
+                    // or
+                    // log_message('error', 'Key not found: ' . $vkriteria->id);
                 }
             }
         }
 
-        // Sum up the ranks and determine the status keterangan
-        $statusKeterangan = [];
-        foreach ($normalisasi as $key => $value) {
+        foreach ($normalisasi as $key => $value) { //total hasil perangkingan
             $rank[$key][] = array_sum($rank[$key]);
+            // Tambahkan logika untuk menentukan status keterangan
             if ($rank[$key] >= 100) {
                 $statusKeterangan[$key] = 'Sangat Baik';
             } elseif ($rank[$key] >= 70 && $rank[$key] < 100) {
@@ -87,10 +72,9 @@ class HasilPerhitunganController extends Controller
             }
         }
 
-        // Sort the ranks
-        arsort($rank);
+        arsort($rank); //sortir $rank
 
-        // Pass data to the view
-        return view('pages.hasil_perhitungan.index', compact('kriteria', 'alternatif', 'penilaian', 'minMax', 'normalisasi', 'rank'));
+        // dd($rank);
+        return view('pages.hasil_perhitungan.index', compact(['kriteria', 'alternatif', 'penilaian', 'minMax', 'normalisasi', 'rank']));
     }
 }
