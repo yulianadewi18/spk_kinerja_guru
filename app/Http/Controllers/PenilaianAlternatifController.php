@@ -144,6 +144,9 @@ class PenilaianAlternatifController extends Controller
 
     public function update(Request $request, $kode_alternatif, $periode)
     {
+        if($request->id_alternatif == null || $request->periode == null){
+            return redirect()->route('penilaian_alternatif')->with('error', 'Ada data kriteria atau subkriteria yang masih kosong!');
+        }
         $kriteria = $request->id_kriteria;
         $subKriteria = $request->id_sub;
 

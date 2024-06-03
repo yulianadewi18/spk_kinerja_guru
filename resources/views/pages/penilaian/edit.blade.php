@@ -30,7 +30,6 @@
                     <div class="form-group">
                         <label for="">Alternatif</label>
                         <select name="id_alternatif" class="form-control">
-                            <option value="">Pilih</option>
                             @foreach ($alternatif as $alt)
                             <option value="{{ $alt->id }}" {{ $alt->id == $penilaian->first()->id_alternatif ? 'selected' : '' }}>{{ $alt->guru['nama_guru'] }}</option>
                             @endforeach
@@ -53,7 +52,6 @@
                             </td>
                             <td>
                                 <select name="id_sub[]" class="form-control mb-2">
-                                    <option value="">Pilih</option>
                                     @foreach ($subKriteria as $sub)
                                     <option value="{{ $sub->id }}" {{ $sub->id == $penilaian[$key]->id_sub ? 'selected' : '' }}>{{ $sub->id }}</option>
                                     @endforeach
@@ -74,7 +72,7 @@
         </div>
         <div class="card-footer" style="display: flex; justify-content: space-between!important;">
             <button type="button" class="btn btn-sm btn-warning" onclick="goBack()">Kembali</button>
-            <button type="button" class="btn btn-sm btn-primary" onclick="validateAndSubmit()">Simpan</button>
+            <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
         </div>
         </form>
 </div>
@@ -84,39 +82,6 @@
         window.history.back();
     }
 
-    function validateAndSubmit() {
-        var isValid = validateForm();
-
-        if (isValid) {
-            document.getElementById('penilaianForm').submit();
-        } else {
-            Swal.fire({
-                icon: 'error',
-                title: 'Oops...',
-                text: 'Ada data yang masih kosong! Silakan isi semua field.',
-            });
-        }
-    }
-
-    function validateForm() {
-        var periode = document.getElementsByName('periode')[0].value;
-        var idAlternatif = document.getElementsByName('id_alternatif')[0].value;
-        var idSubValues = document.getElementsByName('id_sub[]');
-
-        // Check if periode and idAlternatif are not empty
-        if (periode.trim() === '' || idAlternatif.trim() === '') {
-            return false;
-        }
-
-        // Check if at least one id_sub is selected for each kriteria
-        for (var i = 0; i < idSubValues.length; i++) {
-            if (idSubValues[i].value.trim() === '') {
-                return false;
-            }
-        }
-
-        return true;
-    }
 </script>
 
 @endsection

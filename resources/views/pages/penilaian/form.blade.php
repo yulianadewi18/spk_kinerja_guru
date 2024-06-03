@@ -10,7 +10,7 @@
             <div class="row">
                 <div class="col-lg-6">
                     <div class="form-group">
-                        <label for="periode">Periode</label>
+                        <label for="periode">Tahun Pelajaran</label>
                         <select class="form-control" id="periode" name="periode">
                             @php
                             $tahunAkhir = date('Y');
@@ -77,7 +77,6 @@
         </div>
     </form>
 </div>
-<<<<<<< HEAD
 
 <script>
     function goBack() {
@@ -85,6 +84,4 @@
     }
 </script>
 
-=======
->>>>>>> afe2ff37056cbc2ba48d0f5e5a38a8407f5789d8
 @endsection

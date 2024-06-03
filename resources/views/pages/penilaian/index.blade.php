@@ -21,9 +21,9 @@
 <div class="mb-2">
     <form action="{{ route('penilaian_alternatif') }}" method="GET">
         <div class="form-group">
-            <label for="periodeFilter">Pilih Periode:</label>
+            <label for="periodeFilter">Pilih Tahun Pelajaran:</label>
             <select name="periode" id="periodeFilter" class="form-control" onchange="this.form.submit()">
-                <option value="">Pilih Periode</option>
+                <option value="">Pilih Tahun Pelajaran</option>
                 @foreach ($periode as $p)
                     <option value="{{ $p }}">{{ $p }}</option>
                 @endforeach
@@ -71,7 +71,6 @@
         $('#dataTable').DataTable();
     });
 
-<<<<<<< HEAD
     function deletePenilaian(kodeAlternatif, periode) {
         Swal.fire({
             title: 'Apakah Anda yakin?',
@@ -112,8 +111,4 @@
 <script src="{{ url('sbAdmin/vendor/datatables/jquery.dataTables.min.js') }}"></script>
 <script src="{{ url('sbAdmin/vendor/datatables/dataTables.bootstrap4.min.js') }}"></script>
 
-=======
-    <!-- Page level custom scripts -->
-    <script src="{{ url('sbAdmin/js/demo/datatables-demo.js') }}"></script>
->>>>>>> afe2ff37056cbc2ba48d0f5e5a38a8407f5789d8
 @endpush
